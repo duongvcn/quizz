@@ -15,7 +15,7 @@ def initial_config():
     openai.api_key = st.secrets[OPENAI_TOKEN]
 
     st.set_page_config(
-        page_title="Exam generator",
+        page_title="Trắc nghiệm môn nhập môn lập trình",
         page_icon=":pencil2:",
     )
 

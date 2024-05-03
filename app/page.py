@@ -78,8 +78,9 @@ class GenerateExamPage(Page):
             st.warning("Đơi một chút...")
             try:
                 app.questions = get_questions(topics, number_of_questions, number_of_answers, level, language)
-            except Exception:
-                st.error("An error occurred while generating the questions. Please try again")
+            except Exception as e:
+                print("Unexpected error:", e)
+                st.error(e)
 
         if app.questions is not None:
 
