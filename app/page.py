@@ -29,54 +29,51 @@ class Page:
 class GenerateExamPage(Page):
 
     description = """
-    This app generates exams with questions and answers, powered by GPT-3.5 (a.k.a. ChatGPT), 
-    and can generate questions and answers on any topic. You can download the questions as a 
-    PDF file or take the exam within the app. However, the quality of the generated questions 
-    and answers may vary depending on the topic. If you are unsure about the accuracy of any of 
-    the questions, you can request clarifications from the AI in the results page. In most cases, 
-    the AI will be able to rectify any mistakes. However, if you are still unsure, it is recommended 
-    that you search for the topic on the internet or ask an expert.
-
-    The app is intended for learning purposes only, to help students practice and test their knowledge 
-    with immediate feedback. It is not intended to generate exams for real-world applications. Please 
-    note that the app is not responsible for any damage caused by its use.
+    Kết hợp LLMs để thiết kế các đề trắc nghiệm cho môn học Nhập môn lập trình.
     """
 
     def render(self, app):
         """
         Render the page
         """
-        st.title("Generate exam")
+        st.title("Đề Thi Nhập Môn Lập Trình")
 
         st.markdown(self.description)
 
-        topics = st.text_input(
-            "Topics",
-            placeholder="Topics to include in the exam",
-            help="It is recommended to use a comma-separated list of topics"
-        )
+        topics = st.selectbox(
+            "Ngôn ngữ",
+            ("Java",".Net", "HTML", "CSS"))
 
         number_of_questions = st.number_input(
-            "Number of questions",
+            "Số lượng câu hỏi",
             min_value=5,
             max_value=30,
             value=10,
-            help="Number of questions that will be generated"
+            help="Số lượng câu hỏi mỗi đề"
         )
 
         number_of_answers = st.number_input(
-            "Number of answers",
+            "Số lượng lựa chọn",
             min_value=3,
             max_value=5,
             value=4,
-            help="Number of possible answers that will be generated for each question"
+            help="Số lượng lựa chọn mỗi câu hỏi"
+        )
+
+
+        level = st.number_input(
+            "Độ khó",
+            min_value=1,
+            max_value=5,
+            value=1,
+            help="Độ khó của đề"
         )
 
         if st.button("Generate", help="Generate the questions according to the parameters"):
 
-            st.warning("Generating questions. This may take a while...")
+            st.warning("Đơi một chút...")
             try:
-                app.questions = get_questions(topics, number_of_questions, number_of_answers)
+                app.questions = get_questions(topics, number_of_questions, number_of_answers, level, option)
             except Exception:
                 st.error("An error occurred while generating the questions. Please try again")
 
