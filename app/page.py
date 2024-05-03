@@ -42,7 +42,7 @@ class GenerateExamPage(Page):
 
         topics = st.selectbox(
             "Chủ đề",
-            ("Java",".Net", "HTML", "CSS"))
+            ("Java",".Net", "HTML", "CSS", "Javascript"))
 
         number_of_questions = st.number_input(
             "Số lượng câu hỏi",
