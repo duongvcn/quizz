@@ -41,7 +41,7 @@ class GenerateExamPage(Page):
         st.markdown(self.description)
 
         topics = st.selectbox(
-            "Ngôn ngữ",
+            "Chủ đề",
             ("Java",".Net", "HTML", "CSS"))
 
         number_of_questions = st.number_input(
@@ -69,11 +69,15 @@ class GenerateExamPage(Page):
             help="Độ khó của đề"
         )
 
+        language = st.selectbox(
+            "Ngôn Ngữ",
+            ("Vietnamese","English"))
+        
         if st.button("Generate", help="Generate the questions according to the parameters"):
 
             st.warning("Đơi một chút...")
             try:
-                app.questions = get_questions(topics, number_of_questions, number_of_answers, level, option)
+                app.questions = get_questions(topics, number_of_questions, number_of_answers, level, language)
             except Exception:
                 st.error("An error occurred while generating the questions. Please try again")
 

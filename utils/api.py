@@ -20,7 +20,7 @@ def complete_text(prompt: str) -> str:
     return openai.ChatCompletion.create(model=MODEL, messages=messages)["choices"][0]["message"]["content"]
 
 
-def prepare_prompt(topics: str, number_of_questions: int, number_of_answers: int, level: int) -> str:
+def prepare_prompt(topics: str, number_of_questions: int, number_of_answers: int, level: int, language: str) -> str:
     """
     Prepare prompt to complete
     :param topics: Topics to include in the exam
@@ -32,7 +32,7 @@ def prepare_prompt(topics: str, number_of_questions: int, number_of_answers: int
         f"Create an exam of multiple choice questions with {number_of_questions} "
         f"questions and {number_of_answers} of possible answers in each question. "
         f"Put the correct answer in bold (surrounded by **) in its original spot. "
-        f"The exam should be about program language {topics} basic in Vietnamese. Only generate the questions and "
+        f"The exam should be about program language {topics} basic in {language}. Only generate the questions and "
         f"answers, not the exam itself. If the complex of question from 1 to 5 then generate with level complex is {level} "
     )
 
@@ -98,7 +98,7 @@ def response_to_questions(response: str) -> List[Question]:
     return questions
 
 
-def get_questions(topics: str, number_of_questions: int, number_of_answers: int, level: int) -> List[Question]:
+def get_questions(topics: str, number_of_questions: int, number_of_answers: int, level: int, language: str) -> List[Question]:
     """
     Get questions from OpenAI API
     :param topics: Topics to include in the exam
@@ -106,7 +106,7 @@ def get_questions(topics: str, number_of_questions: int, number_of_answers: int,
     :param number_of_answers: Number of answers
     :return: List of questions
     """
-    prompt = prepare_prompt(topics, number_of_questions, number_of_answers, level)
+    prompt = prepare_prompt(topics, number_of_questions, number_of_answers, level, language)
     response = complete_text(prompt)
     return response_to_questions(response)
 
